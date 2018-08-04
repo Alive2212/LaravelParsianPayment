@@ -1,0 +1,41 @@
+{
+    "name": "alive2212/laravelparsianpayment",
+    "description": ":description",
+    "license": "license",
+    "authors": [
+        {
+            "name": "Babak Nodoust",
+            "email": "alive2212@gmail.com",
+            "homepage": "http://babakn.com"
+        }
+    ],
+    "homepage": "https://github.com/alive2212/laravelparsianpayment",
+    "keywords": ["Laravel", "LaravelParsianPayment"],
+    "require": {
+        "illuminate/support": "~5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0",
+        "orchestra/testbench": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Alive2212\\LaravelParsianPayment\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Alive2212\\LaravelParsianPayment\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Alive2212\\LaravelParsianPayment\\LaravelParsianPaymentServiceProvider"
+            ],
+            "aliases": {
+                "LaravelParsianPayment": "Alive2212\\LaravelParsianPayment\\Facades\\LaravelParsianPayment"
+            }
+        }
+    }
+}
