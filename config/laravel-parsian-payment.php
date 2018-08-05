@@ -7,5 +7,7 @@ return [
         'ipg' => 'https://pec.shaparak.ir/NewIPG/?Token=',
         'callback' => '',
         'confirm' => 'https://pec.shaparak.ir/NewIPGServices/Confirm/ConfirmService.asmx?WSDL',
+        'successful' => 'your app deep link',
+        'failed' => 'your app deep link',
     ],
 ];

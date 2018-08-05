@@ -23,6 +23,9 @@ class CustomParsianPaymentController extends BaseController
     public function initController()
     {
         $this->model = new AliveParsianPayment();
+        $this->middleware([
+            'auth:api',
+        ]);
     }
 
     /**
@@ -125,12 +128,68 @@ class CustomParsianPaymentController extends BaseController
         // convert data
         $response->setData($this->dataAdaptor($response->getData()));
 
+        //add user id into data
+        $response->getData()->put('user_id', auth()->id());
+
+
+        // store response to record
+        $parsianPayment = new AliveParsianPayment();
+        $parsianPayment->create($response->getData()->toArray());
+
         //init response
         return SmartResponse::response($response);
     }
 
     public function confirm(Request $request)
     {
+        //TODO goto middle ware
+        //check for confirmed payment and return back to app
+        $parsianPayment = new AliveParsianPayment();
+        $payment = $parsianPayment->where('order_id', '=', $request['OrderId'])
+            ->first();
+        if (!is_null($payment)) {
+            if ($payment->toArray()['status'] == 'confirmed') {
+                return redirect(config('laravel-parsian-payment.url.successful') . '/' . $payment->toArray()['customer_order_id']);
+            }
+        }
+
+        // get response
+        $response = $this->confirmFromBank($request);
+
+        // get data from response
+        $data = $response->getData();
+
+        // log to debug
+        Log::info('response ==> ' . json_encode($data));
+
+        // create or update a record of data base
+        (new AliveParsianPayment())->firstOrCreate([
+            'order_id' => $data->get('order_id'),
+        ])->update($data->toArray());
+
+        //TODO delete this codes
+        if ($response->getStatus() == "true") {
+            $order = (new AliveParsianPayment())->where([
+                ['order_id', '=', $data->get('order_id')],
+            ])->first()->customerOrder();
+            if (!is_null($order->first())) {
+                $order->first()->update([
+                    'payed' => true,
+                    'payment_type' => 'IPG',
+                ]);
+                return redirect(config('laravel-parsian-payment.url.successful') . '/' . $order->first()->toArray()['id']);
+            } else {
+//                dd(' My name is Babak Nodoust and I have closest relationship with all US & UK celebrities');
+                return redirect(config('laravel-parsian-payment.url.failed'));
+            }
+        } else {
+            return redirect(config('laravel-parsian-payment.url.failed'));
+        }
+    }
+
+    public function confirmFromBank(Request $request)
+    {
+
         $response = new ResponseModel();
         $response->getData()->put('token', $request['Token']);
         $response->getData()->put('status_code', $request['status']);
@@ -213,6 +272,7 @@ class CustomParsianPaymentController extends BaseController
         }
 
         $response->getData()->put('status', $status);
+
         return $response;
     }
 

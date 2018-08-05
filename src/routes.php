@@ -32,6 +32,7 @@ Route::prefix('api')->group(function () {
                 Route::prefix('parsian')->group(function () {
                     Route::prefix('payment')->group(function () {
                         Route::post('init', 'Alive2212\LaravelParsianPayment\Http\Controllers\CustomParsianPaymentController@init')->name('parsian_payment.custom.init');
+                        Route::post('confirm', 'Alive2212\LaravelParsianPayment\Http\Controllers\CustomParsianPaymentController@confirm')->name('parsian_payment.custom.confirm');
                     });
                 });
             });

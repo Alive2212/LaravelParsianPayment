@@ -12,7 +12,26 @@ This is where your description should go. Take a look at [contributing.md](contr
 Via Composer
 
 ``` bash
-$ composer require alive2212/laravelparsianpayment
+$ composer require alive2212/laravel-parsian-payment
+```
+add following app.php in config file 
+
+```php
+'providers'=>[
+    ...
+
+    /*
+     *  add parsian payment service provider
+     */
+    Alive2212\LaravelParsianPayment\LaravelParsianPaymentServiceProvider::class,
+    
+    ...
+]
+```
+
+``` bash
+php artisan vendor:publish --tag laravel-parsian-payment.config
+php artisan vendor:publish --tag laravel-parsian-payment.lang
 ```
 
 ## Usage
