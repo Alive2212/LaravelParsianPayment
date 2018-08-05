@@ -25,7 +25,7 @@ class CustomParsianPaymentController extends BaseController
         $this->model = new AliveParsianPayment();
         $this->middleware([
             'auth:api',
-        ]);
+        ])->except('confirm');
     }
 
     /**
