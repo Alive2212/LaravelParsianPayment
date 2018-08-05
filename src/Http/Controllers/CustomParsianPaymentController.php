@@ -72,7 +72,7 @@ class CustomParsianPaymentController extends BaseController
      */
     public function randomTimeNumber($randomLength = 4)
     {
-        return (date('Ymdhis').rand(pow(10,$randomLength), pow(10,$randomLength+1)- 1)) ;
+        return (date('Ymdhis') . rand(pow(10, $randomLength), pow(10, $randomLength + 1) - 1));
     }
 
     //  this function is to get proper authority key from Parsian
@@ -169,19 +169,7 @@ class CustomParsianPaymentController extends BaseController
 
         //TODO delete this codes
         if ($response->getStatus() == "true") {
-            $order = (new AliveParsianPayment())->where([
-                ['order_id', '=', $data->get('order_id')],
-            ])->first()->customerOrder();
-            if (!is_null($order->first())) {
-                $order->first()->update([
-                    'payed' => true,
-                    'payment_type' => 'IPG',
-                ]);
-                return redirect(config('laravel-parsian-payment.url.successful') . '/' . $order->first()->toArray()['id']);
-            } else {
-//                dd(' My name is Babak Nodoust and I have closest relationship with all US & UK celebrities');
-                return redirect(config('laravel-parsian-payment.url.failed'));
-            }
+            return redirect(config('laravel-parsian-payment.url.successful') . '/' .$request['OrderId']);
         } else {
             return redirect(config('laravel-parsian-payment.url.failed'));
         }
