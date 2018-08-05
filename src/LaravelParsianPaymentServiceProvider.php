@@ -2,6 +2,7 @@
 
 namespace Alive2212\LaravelParsianPayment;
 
+use Alive2212\LaravelParsianPayment\Console\Commands\Init;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelParsianPaymentServiceProvider extends ServiceProvider
@@ -30,12 +31,23 @@ class LaravelParsianPaymentServiceProvider extends ServiceProvider
                 __DIR__ . '/../config/laravel-parsian-payment.php' => config_path('laravel-parsian-payment.php'),
             ], 'laravel-parsian-payment.config');
 
+            // Publishing the configuration file.
+            $this->publishes([
+                __DIR__ . '/Jobs' => app_path('Jobs'),
+            ], 'laravel-parsian-payment.job');
+
             // Publishing the translation files.
             $this->publishes([
                 __DIR__ . '/../resources/lang/' => resource_path('lang/vendor/alive2212'),
             ], 'laravel-parsian-payment.lang');
 
+            // Registering package commands.
+            $this->commands([
+                Init::class,
+            ]);
+
         }
+
     }
 
     /**

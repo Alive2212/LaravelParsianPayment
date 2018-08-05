@@ -32,6 +32,8 @@ add following app.php in config file
 ``` bash
 php artisan vendor:publish --tag laravel-parsian-payment.config
 php artisan vendor:publish --tag laravel-parsian-payment.lang
+php artisan vendor:publish --tag laravel-parsian-payment.job
+php artisan parsian_payment:init
 ```
 
 ## Usage

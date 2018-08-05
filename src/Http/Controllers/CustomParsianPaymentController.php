@@ -7,6 +7,7 @@ use Alive2212\LaravelSmartResponse\ResponseModel;
 use Alive2212\LaravelSmartResponse\SmartResponse\SmartResponse;
 use Alive2212\LaravelSmartRestful\BaseController;
 use Alive2212\LaravelStringHelper\StringHelper;
+use App\Jobs\ParsianPaymentConfirmedJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
@@ -25,7 +26,7 @@ class CustomParsianPaymentController extends BaseController
         $this->model = new AliveParsianPayment();
         $this->middleware([
             'auth:api',
-        ])->except('confirm');
+        ])->except(['confirm']);
     }
 
     /**
@@ -169,7 +170,12 @@ class CustomParsianPaymentController extends BaseController
 
         //TODO delete this codes
         if ($response->getStatus() == "true") {
-            return redirect(config('laravel-parsian-payment.url.successful') . '/' .$request['OrderId']);
+            ParsianPaymentConfirmedJob::dispatch(
+                (new AliveParsianPayment())->firstOrCreate([
+                    'order_id' => $data->get('order_id'),
+                ])->toArray());
+            return redirect(config('laravel-parsian-payment.url.successful') . '/' . $request['OrderId']);
+
         } else {
             return redirect(config('laravel-parsian-payment.url.failed'));
         }
