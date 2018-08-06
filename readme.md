@@ -5,7 +5,16 @@
 [![Build Status][ico-travis]][link-travis]
 [![StyleCI][ico-styleci]][link-styleci]
 
-This is where your description should go. Take a look at [contributing.md](contributing.md) to see a to do list.
+This is Parsian Bank IPG Payment Package that work with soap services.
+This package contain from:
+
+* Routes (init payment & confirm payment)
+
+* Controller
+
+* Job (to dispatch when any payment confirmed)
+
+* Setting
 
 ## Installation
 
