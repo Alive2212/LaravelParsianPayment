@@ -187,11 +187,6 @@ class CustomParsianPaymentController extends BaseController
                 (new AliveParsianPayment())->firstOrCreate([
                     'order_id' => $data->get('order_id'),
                 ])->toArray());
-            dd($this->getBaseDeepLink($payment->toArray()) .
-                '?status=' .
-                config('laravel-parsian-payment.url.successful') .
-                '&payment_order_id=' .
-                $request['OrderId']);
             return redirect(
                 $this->getBaseDeepLink($payment->toArray()) .
                 '?status=' .
