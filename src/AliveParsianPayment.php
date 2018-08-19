@@ -23,6 +23,7 @@ class AliveParsianPayment extends BaseModel
         'rrn',
         'card_number_masked',
         'status',
+        'base_deep_link'
     ];
 
     /**

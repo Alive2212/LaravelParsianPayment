@@ -15,7 +15,8 @@ class LaravelParsianPaymentServiceProvider extends ServiceProvider
     public function boot()
     {
         // translations
-        $this->loadTranslationsFrom(resource_path('lang/vendor/alive2212'), 'laravel_parsian_payment');
+        $this->loadTranslationsFrom(resource_path('lang/vendor/alive2212'),
+            'laravel-parsian-payment');
 
         // migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');

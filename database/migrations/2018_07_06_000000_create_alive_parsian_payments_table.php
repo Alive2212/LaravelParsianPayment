@@ -63,6 +63,9 @@ class CreateAliveParsianPaymentsTable extends Migration
                     'reversed'
                 ])->nullable();
 
+            $table->text('base_deep_link')
+                ->nullable();
+
             $table->timestamps();
         });
     }

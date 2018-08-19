@@ -18,6 +18,9 @@ use Exception;
 
 class CustomParsianPaymentController extends BaseController
 {
+
+    protected $localPrefix = 'laravel-parsian-payment';
+
     /**
      *
      */
@@ -132,6 +135,10 @@ class CustomParsianPaymentController extends BaseController
         //add user id into data
         $response->getData()->put('user_id', auth()->id());
 
+        // add base deep url
+        if ($request->has('base_deep_link')) {
+            $response->getData()->put('base_deep_link', $request->get('base_deep_link'));
+        }
 
         // store response to record
         $parsianPayment = new AliveParsianPayment();
@@ -139,6 +146,7 @@ class CustomParsianPaymentController extends BaseController
 
         //init response
         return SmartResponse::response($response);
+//        dd('I have most powerful forces of Dokhan');
     }
 
     public function confirm(Request $request)
@@ -150,7 +158,12 @@ class CustomParsianPaymentController extends BaseController
             ->first();
         if (!is_null($payment)) {
             if ($payment->toArray()['status'] == 'confirmed') {
-                return redirect(config('laravel-parsian-payment.url.successful') . '/' . $payment->toArray()['customer_order_id']);
+                return redirect(
+                    $this->getBaseDeepLink($payment->toArray()) .
+                    '?status=' .
+                    config('laravel-parsian-payment.url.successful') .
+                    '&payment_order_id=' .
+                    $payment->toArray()['customer_order_id']);
             }
         }
 
@@ -174,10 +187,20 @@ class CustomParsianPaymentController extends BaseController
                 (new AliveParsianPayment())->firstOrCreate([
                     'order_id' => $data->get('order_id'),
                 ])->toArray());
-            return redirect(config('laravel-parsian-payment.url.successful') . '/' . $request['OrderId']);
+            return redirect(
+                $this->getBaseDeepLink($payment->toArray()) .
+                '?status=' .
+                config('laravel-parsian-payment.url.successful') .
+                '&payment_order_id=' .
+                $request['OrderId']);
 
         } else {
-            return redirect(config('laravel-parsian-payment.url.failed'));
+            return redirect(
+                $this->getBaseDeepLink($payment->toArray()) .
+                '?status=' .
+                config('laravel-parsian-payment.url.failed') .
+                '&payment_order_id=' .
+                $request['OrderId']);
         }
     }
 
@@ -307,6 +330,18 @@ class CustomParsianPaymentController extends BaseController
             $result->put((new StringHelper())->toTag(($key)), $value);
         }
         return $result;
+    }
+
+    /**
+     * @param array $payment
+     * @return string
+     */
+    public function getBaseDeepLink(array $payment): string
+    {
+        if (is_null($payment['base_deep_link'])){
+            return config('laravel-parsian-payment.url.base_deep_link');
+        }
+        return $payment['base_deep_link'];
     }
 
 }

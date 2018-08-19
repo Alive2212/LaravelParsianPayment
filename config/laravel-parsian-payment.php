@@ -7,7 +7,8 @@ return [
         'ipg' => 'https://pec.shaparak.ir/NewIPG/?Token=',
         'callback' => '{https:// your base url}/',// it should be https in otherwise it will crashed with ios payment
         'confirm' => 'https://pec.shaparak.ir/NewIPGServices/Confirm/ConfirmService.asmx?WSDL',
-        'successful' => 'your app deep link',
-        'failed' => 'your app deep link',
+        'successful' => 'successful',
+        'failed' => 'failed',
+        'base_deep_link' => 'your app base deep link',
     ],
 ];
