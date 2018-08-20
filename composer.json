@@ -1,6 +1,6 @@
 {
     "name": "alive2212/laravel-parsian-payment",
-    "description": ":description",
+    "description": "This is Parsian bank payment package for laravel developers",
     "license": "MIT",
     "authors": [
         {
