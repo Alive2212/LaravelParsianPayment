@@ -45,6 +45,15 @@ php artisan vendor:publish --tag laravel-parsian-payment.job
 php artisan parsian_payment:init
 ```
 
+Add following into one service provider like 'AuthServiceProvider'
+```php
+LaravelParsianPayment::routes(null,['middleware'=>'cors']);
+```
+ if you not use any default middleware for this package routes just use following
+```php
+LaravelParsianPayment::routes();
+``` 
+
 ## Usage
 
 ## Change log
