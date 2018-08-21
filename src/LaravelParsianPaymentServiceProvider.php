@@ -57,7 +57,7 @@ class LaravelParsianPaymentServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/laravel-parsian-payment.php', 'laravel-parsian-payment');
 
-        // Register the service the package provides.
+        // Register the service thsee package provides.
         $this->app->singleton('laravel-parsian-payment', function ($app) {
             return new LaravelParsianPayment;
         });
