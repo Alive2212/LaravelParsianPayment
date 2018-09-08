@@ -45,16 +45,34 @@ php artisan vendor:publish --tag laravel-parsian-payment.job
 php artisan parsian_payment:init
 ```
 
-Add following into one service provider like 'AuthServiceProvider'
+Add following into one service provider like 'RouteServiceProvider'
 ```php
-LaravelParsianPayment::routes(null,['middleware'=>'cors']);
+LaravelParsianPayment::routes(null,['middleware'=>'web']);
 ```
- if you not use any default middleware for this package routes just use following
+ if you not use any default middleware for this package routes you can just use following
 ```php
 LaravelParsianPayment::routes();
 ``` 
 
 ## Usage
+
+After installation you can see following routs with ```php artisan route:list```
+```
+POST: {your base url}/api/v1/custom/alive/parsian/payment/init 
+POST: {your base url}/api/v1/custom/alive/parsian/payment/confirm  
+RESOURCE (CRUD Full): {your base url}/api/v1/alive/parsian/payment 
+```
+
+At first you should use `init` api for init payment for use it put following into Header
+* Authorization
+* Accept
+
+And put following into body of request
+* amount:{int value}
+
+You should set `callback` URL into laravel-parsian-payment like following
+'callback' => '{{base-url}}/api/v1/custom/alive/parsian/payment/confirm'
+
 
 ## Change log
 
