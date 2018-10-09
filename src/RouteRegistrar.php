@@ -6,6 +6,21 @@ use Illuminate\Contracts\Routing\Registrar as Router;
 
 class RouteRegistrar
 {
+    protected $BASE_RESTFUL_PREFIX = '/v1/alive/';
+    /**
+     * package prefix
+     *
+     * @var string
+     */
+    protected $PACKAGE_PREFIX = '/echarge';
+
+    /**
+     * base custom prefix
+     *
+     * @var string
+     */
+    protected $BASE_CUSTOM_PREFIX = '/v1/custom/alive';
+
     /**
      * The router implementation.
      *
@@ -42,30 +57,40 @@ class RouteRegistrar
     public function forRestfulPayment()
     {
         $this->router->group([
-            'prefix' => '/v1/alive/',
+            'prefix' => $this->BASE_RESTFUL_PREFIX,
         ], function (Router $router) {
             $router->resource('/parsian/payment', 'AliveParsianPaymentController');
         });
     }
 
+    /**
+     *
+     *
+     */
     public function forCustomPayment()
     {
         $this->router->group([
-            'prefix' => '/v1/custom/alive/',
+            'prefix' => $this->BASE_CUSTOM_PREFIX,
         ], function (Router $router) {
-
             $router->group([
-                'middleware' => 'auth:api',
-            ],function(Router $router){
-                $router->post(
-                    '/parsian/payment/init',
-                    'CustomParsianPaymentController@init');
-            });
+                'prefix' => $this->PACKAGE_PREFIX,
+            ], function (Router $router) {
+                $router->group([
+                    'middleware' => 'auth:api',
+                ], function (Router $router) {
+                    // place your route that need authentication middleware
 
-            $router->post(
-                '/parsian/payment/confirm',
-                'CustomParsianPaymentController@confirm'
-            );
+                    $router->post(
+                        '/payment/init',
+                        'CustomParsianPaymentController@init');
+                });
+                // place your route
+
+                $router->post(
+                    '/payment/confirm',
+                    'CustomParsianPaymentController@confirm'
+                );
+            });
         });
     }
 }
