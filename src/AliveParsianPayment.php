@@ -25,14 +25,4 @@ class AliveParsianPayment extends BaseModel
         'status',
         'base_deep_link'
     ];
-
-    /**
-     * @return null
-     */
-    public function getQueueableRelations()
-    {
-        return null;
-        // TODO: Implement getQueueableRelations() method.
-    }
-
 }

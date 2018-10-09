@@ -13,6 +13,6 @@ class LaravelParsianPayment extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'laravel-parsian-payment';
+        return 'LaravelParsianPayment';
     }
 }

@@ -73,7 +73,6 @@ And put following into body of request
 You should set `callback` URL into laravel-parsian-payment like following
 'callback' => '{{base-url}}/api/v1/custom/alive/parsian/payment/confirm'
 
-
 ## Change log
 
 Please see the [changelog](changelog.md) for more information on what has changed recently.
