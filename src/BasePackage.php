@@ -10,7 +10,7 @@ namespace Alive2212\LaravelParsianPayment;
 
 use Illuminate\Support\Facades\Route;
 
-class BasePackage
+abstract class BasePackage
 {
     /**
      * route prefix
@@ -26,6 +26,11 @@ class BasePackage
      */
     static protected $CONTROLLER_NAME_SPACE;
 
+
+    abstract public static function getRoutePrefix():string;
+    abstract public static function getControllerNameSpace():string;
+
+
     /**
      * Binds the Passport routes into the controller.
      *
@@ -40,8 +45,8 @@ class BasePackage
         };
 
         $defaultOptions = [
-            'prefix' => self::$ROUTE_PREFIX,
-            'namespace' => self::$CONTROLLER_NAME_SPACE,
+            'prefix' => static::getRoutePrefix(),
+            'namespace' => static::getControllerNameSpace(),
         ];
 
         $options = array_merge($defaultOptions, $options);

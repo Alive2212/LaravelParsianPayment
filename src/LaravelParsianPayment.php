@@ -4,17 +4,23 @@ namespace Alive2212\LaravelParsianPayment;
 
 class LaravelParsianPayment extends BasePackage
 {
-    /**
-     * route prefix
-     *
-     * @var string
-     */
-    static protected $ROUTE_PREFIX = '/api';
+    public function __construct()
+    {
+    }
 
-    /**
-     * controller namespace
-     *
-     * @var string
-     */
-    static protected $CONTROLLER_NAME_SPACE = 'Alive2212\LaravelParsianPayment\Http\Controllers';
+    public static function getRoutePrefix():string
+    {
+        if (is_null(self::$ROUTE_PREFIX)){
+            return "/api";
+        }
+        return (string) self::$ROUTE_PREFIX;
+    }
+
+    public static function getControllerNameSpace():string
+    {
+        if (is_null(self::$CONTROLLER_NAME_SPACE)){
+            return "Alive2212\LaravelParsianPayment\Http\Controllers";
+        }
+        return (string) self::$CONTROLLER_NAME_SPACE;
+    }
 }

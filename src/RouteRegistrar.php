@@ -79,13 +79,11 @@ class RouteRegistrar
                     'middleware' => 'auth:api',
                 ], function (Router $router) {
                     // place your route that need authentication middleware
-
                     $router->post(
                         '/payment/init',
                         'CustomParsianPaymentController@init');
                 });
                 // place your route
-
                 $router->post(
                     '/payment/confirm',
                     'CustomParsianPaymentController@confirm'
