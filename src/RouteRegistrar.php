@@ -12,7 +12,7 @@ class RouteRegistrar
      *
      * @var string
      */
-    protected $PACKAGE_PREFIX = '/echarge';
+    protected $PACKAGE_PREFIX = '/parsian';
 
     /**
      * base custom prefix
