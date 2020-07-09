@@ -16,7 +16,7 @@ class CreateAliveParsianPaymentsTable extends Migration
         Schema::create('alive_parsian_payments', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedInteger('user_id')
+            $table->unsignedBigInteger('user_id')
                 ->nullable()
                 ->index();
             $table->foreign('user_id')
