@@ -26,7 +26,7 @@ class LaravelParsianPaymentServiceProvider extends ServiceProvider
 
             // Publishing the configuration file.
             $this->publishes([
-                __DIR__ . '/../config/laravel-parsian-payment.php' => config_path('laravel-smart-restful.php'),
+                __DIR__ . '/../config/laravel-parsian-payment.php' => config_path('laravel-parsian-payment.php'),
             ], 'laravel-parsian-payment.config');
 
             // Publishing the configuration file.
